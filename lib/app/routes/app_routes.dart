@@ -9,6 +9,7 @@ class Routes {
   static const SEARCH = _Paths.SEARCH;
   static const CHECKOUT = _Paths.CHECKOUT;
   static const HOME = _Paths.HOME;
+  static const ADDRECORD = _Paths.ADDRECORD;
 }
 
 abstract class _Paths {
@@ -19,5 +20,6 @@ abstract class _Paths {
   static const DASHBOARD = '/dashboard';
   static const SEARCH = "/search";
   static const CHECKOUT = "/checkout";
+  static const ADDRECORD = "/addrecord";
   static const HOME = "/home";
 }

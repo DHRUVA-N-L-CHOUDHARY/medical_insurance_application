@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:medical_insurance_system/app/data/remote/endpoints.dart';
 import 'package:medical_insurance_system/utils/colors.dart';
 
 import '../../../components/snackBar.dart';
@@ -17,9 +18,24 @@ class SignUpController extends GetxController {
   late TextEditingController aadharNumberController;
   late TextEditingController nameController;
   late TextEditingController phoneController;
+  // late TextEditingController
 
   RxBool isLoading = false.obs;
   late Color textColor = const Color(0xFF3463B4);
+
+  RxString selectedUserType =
+      'Patient'.obs; // Observable for selected user type
+  final List<String> userTypes = [
+    'Patient',
+    'Hospital',
+    'Insurance Company'
+  ]; // List of user types
+
+  // Function to set selected user type
+  void setSelectedUserType(String userType) {
+    selectedUserType.value = userType;
+    update();
+  }
 
   @override
   void onInit() {
@@ -31,7 +47,7 @@ class SignUpController extends GetxController {
     phoneController = TextEditingController();
   }
 
-  Future<void> signUp() async {
+  Future<void> signUp(Map<String, dynamic> data, String userType) async {
     isLoading(true);
     update();
     FocusManager.instance.primaryFocus?.unfocus();
@@ -53,7 +69,7 @@ class SignUpController extends GetxController {
         showSnackbar("password");
         return;
       } else if (aadharNumberController.text.trim().isEmpty ||
-          aadharNumberController.text.trim().length < 12) {
+          (aadharNumberController.text.trim().length < 12 && selectedUserType.value == userTypes[0])) {
         showSnackbar("Aaadhar Number");
         return;
       } else if (isPasswordCompliant(
@@ -66,19 +82,27 @@ class SignUpController extends GetxController {
             snackPosition: SnackPosition.BOTTOM);
         return;
       } else {
-        Map res = await ApiService().createUserAccount({
-          "email": emailController.text,
-          "password": passwordController.text,
-          "name": nameController.text,
-          "phone": phoneController.text,
-          "aadhaar": aadharNumberController.text
-        });
+        Map res = await ApiService().createUserAccount(data, userType);
         if (res["status"] == 1) {
-          MySharedPref.setEmail(res["userData"]["email"].toString());
-          MySharedPref.setUserId(res["userData"]["_id"].toString());
-          MySharedPref.setName(res["userData"]["name"].toString());
-          MySharedPref.setPhone(res["userData"]["phone"].toString());
-          MySharedPref.setAadhar(res["userData"]["aadhar"].toString());
+          if (selectedUserType.value == userTypes[0]) {
+            MySharedPref.setEmail(res["data"]["email"].toString());
+            MySharedPref.setUserId(res["data"]["_id"].toString());
+            MySharedPref.setName(res["data"]["name"].toString());
+            MySharedPref.setPhone(res["data"]["phone"].toString());
+            MySharedPref.setAadhar(res["data"]["aadhar"].toString());
+          } else if (selectedUserType.value == userTypes[1]) {
+            MySharedPref.setEmail(res["data"]["email"].toString());
+            MySharedPref.setUserId(res["data"]["_id"].toString());
+            MySharedPref.setName(res["data"]["name"].toString());
+            MySharedPref.setPhone(res["data"]["phone"].toString());
+            MySharedPref.setAadhar(res["data"]["license"].toString());
+          } else {
+            MySharedPref.setEmail(res["data"]["email"].toString());
+            MySharedPref.setUserId(res["data"]["_id"].toString());
+            MySharedPref.setName(res["data"]["name"].toString());
+            MySharedPref.setPhone(res["data"]["phone"].toString());
+            MySharedPref.setAadhar(res["data"]["aadhar"].toString());
+          }
           Get.snackbar("Register Successfully", "User Successfully Registered",
               backgroundColor: kPrimaryBlue,
               colorText: Colors.white,

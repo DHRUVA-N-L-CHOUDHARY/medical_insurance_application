@@ -92,15 +92,15 @@ class ApiService extends ApiInterface {
     }
   }
 
-  Future<Map> createUserAccount(Map<String, dynamic> data) async {
+  Future<Map> createUserAccount(Map<String, dynamic> data, String usertype) async {
     http.Response res = await postApi(
-        url: ApiInterface.baseUrl + Endpoints.createCustomer, data: data);
+        url: ApiInterface.baseUrl + Endpoints.register + usertype, data: data);
     return _parseBaseResponse(res) ?? {};
   }
 
-  Future<Map> loginUser(Map<String, dynamic> data) async {
+  Future<Map> loginUser(Map<String, dynamic> data,  String usertype) async {
     http.Response res = await postApi(
-        url: ApiInterface.baseUrl + Endpoints.loginCustomer, data: data);
+        url: ApiInterface.baseUrl + Endpoints.login + usertype, data: data);
     return _parseBaseResponse(res) ?? {};
   }
 
