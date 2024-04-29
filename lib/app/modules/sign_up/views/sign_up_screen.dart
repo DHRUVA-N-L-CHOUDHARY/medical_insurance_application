@@ -157,12 +157,20 @@ class SignUpScreen extends StatelessWidget {
                                   ],
                                   isPassword: false,
                                 )
-                              : MyTextField(
+                              : controller.selectedUserType.value == controller.userTypes[1] ? MyTextField(
                                   textController:
                                       controller.aadharNumberController,
                                   firstImage: 'assets/aadhar.png',
                                   firstText: 'Hospital ID',
                                   hintText: 'Enter Hospital ID',
+                                  keyboardType: TextInputType.text,
+                                  isPassword: false,
+                                ) : MyTextField(
+                                  textController:
+                                      controller.aadharNumberController,
+                                  firstImage: 'assets/aadhar.png',
+                                  firstText: 'Insurance Company ID',
+                                  hintText: 'Enter Insurance Company ID',
                                   keyboardType: TextInputType.text,
                                   isPassword: false,
                                 ),
