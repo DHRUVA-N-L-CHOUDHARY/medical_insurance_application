@@ -14,7 +14,7 @@ The Decentralized AI for Medical Diagnostics project aims to improve the efficie
 - **Backend**: Node.js, Express.js
 - **Blockchain**: Ethereum, Metamask, Hardhat
 - **Database**: MongoDB
-- **Other Tools**: Google Cloud Platform (for deployment and scalability)
+- **Other Tools**: AWS (for deployment and scalability)
 
 ## Installation
 1. **Clone Repository:**
@@ -25,22 +25,13 @@ The Decentralized AI for Medical Diagnostics project aims to improve the efficie
 
 2. **Install Dependencies:**
    ```
-   cd frontend
    flutter pub get
-   cd ../backend
-   npm install
    ```
 
 3. **Run Application:**
    - Start Flutter app:
      ```
-     cd ../frontend
      flutter run
-     ```
-   - Start Node.js server:
-     ```
-     cd ../backend
-     npm start
      ```
 
 4. **Configure Blockchain:**
@@ -48,11 +39,5 @@ The Decentralized AI for Medical Diagnostics project aims to improve the efficie
    - Deploy smart contracts using Hardhat.
 
 5. **Use Application:**
-   - Access the application at `http://localhost:3000` (adjust port if necessary).
+   - After running the application create account for User create a medical expense and also buy a medical policy.
    - Create accounts, interact with smart contracts, and explore medical diagnostics functionalities.
-
-## Contributors
-- Dhruva N L Choudhary
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
